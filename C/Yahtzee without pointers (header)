@@ -1,0 +1,56 @@
+#ifndef YAHTZEE_H
+#define YAHTZEE_H
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void display_menu (void);
+int get_option (void);
+int valid_option (int option);
+int run (void);
+int roll_die (void);
+int print_rules (void);
+
+
+int count_total (int die1, int die2, int die3, int die4, int die5, int number);
+int toak_check (int count1, int count2, int count3, int count4, int count5, int count6);
+int foak_check (int count1, int count2, int count3, int count4, int count5, int count6);
+int sml_check (int count1, int count2, int count3, int count4, int count5, int count6);
+int lrg_check (int count1, int count2, int count3, int count4, int count5, int count6);
+int yahtzee_check (int count1, int count2, int count3, int count4, int count5, int count6);
+int twooak_check (int count1, int count2, int count3, int count4, int count5, int count6);
+int full_house_check (int two_kind, int three_kind);
+int sum_dice (int die1, int die2, int die3, int die4, int die5, int number);
+int sum_dice_all (int die1, int die2, int die3, int die4, int die5);
+
+int loop_reroll (void);
+
+int swt_decision (int die1, int die2, int die3, int die4, int die5, int option);
+int option_flag (int option);
+void display_choices (int die1, int die2, int die3, int die4, int die5);
+int numeral_option (void);
+int valid_variable (int option);
+int multi_get (int die1, int die2, int die3, int die4, int die5);
+int add_points (int die1, int die2, int die3, int die4, int die5);
+int get_input (void);
+void ask_bool (void);
+char get_bool (void);
+int valid_char (char input);
+char yes_no (void);
+void ask_roll (void);
+
+int loop_reroll (int die1, int die2, int die3, int die4, int die5);
+void print_reroll (int die1, int die2, int die3, int die4, int die5);
+int get_reroll_number (void);
+int valid_reroll (int number);
+void print_scores (int one, int two);
+int reroll_all (void);
+
+void print_table_scores (int play1_three, int play1_four, int play1_full, int play1_sml, int play1_lrg, int play1_yah, int play2_three,
+		int play2_four, int play2_full, int play2_sml, int play2_lrg, int play2_yah, int play2_chance_score, int play1_chance_score,
+		int play1_1_score, int play1_2_score, int play1_3_score, int play1_4_score, int play1_5_score, int play1_6_score,
+		int play2_1_score, int play2_2_score, int play2_3_score, int play2_4_score, int play2_5_score, int play2_6_score);
+
+void print_final_score (int player1, int player2);
+
+#endif
