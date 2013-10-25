@@ -1,0 +1,779 @@
+#include "Yahtzee.h"
+
+//Menu opens with three option variables
+void display_menu (void)
+{
+	printf ("1. Print game rules. \n");
+	printf ("2. Play game. \n");
+	printf ("3. Exit. \n");
+}
+
+//collects the input
+int get_option (void)
+{
+	int option = 0;
+
+	scanf ("%d", &option);
+
+	return option;
+}
+
+//checks if input is a valid option
+int valid_option (int option)
+{
+	int flag = 0; // false
+
+	if ((option >= 1) && (option <= 3))
+	{
+		flag = 1; // valid option
+	}
+
+	return flag;
+}
+
+//runs menu
+int run (void)
+{
+	int option = 0, valid = 0;
+
+	do
+	{
+		display_menu ();
+		option = get_option ();
+		valid = valid_option (option);
+		
+		if (option == 1)
+		{
+			system("cls");
+			valid = print_rules ();
+		}
+		system ("cls");
+	} while (!valid); 
+
+	return option;
+}
+
+//randomizes the roll count
+int roll_die (void)
+{
+	int die_value = 0;
+
+	die_value = (rand () % 6) + 1;
+
+	return die_value;
+}
+
+//print out rules
+int print_rules (void)
+{
+	printf ("Game Start \n To start with, roll all the dice. After rolling you can either score the current roll (see below), or re-roll any or all of the dice.\n");
+	printf ("You may only roll the dice a total of 3 times. After rolling 3 times you must choose a category to score.\n");
+	printf ("You may score the dice at any point in the round, i.e. it doesnt have to be after the 3rd roll.\n\n\n");
+	printf ("Scoring\n\nTo score your combination of 5 dice, you click one of the 13 boxes, or write it on the scorecard (scoresheet). ");
+	printf ("There are two sections to the score table - the Upper Section and the Lower Section.\n");
+	printf ("Once a box has been scored, it cannot be scored again for the rest of the game (except the Yahtzee category), so choose wisely.\n\n\n");
+	printf ("Upper Section Scoring\n\n");
+	printf ("If you score in the upper section of the table, your score is the total of the specified die face.\n\n\n");
+	printf ("Lower Section Scoring\n\n");
+	printf ("In the lower scores, you score either a set amount, or zero if you dont satisfy the category requirements.\n");
+	printf ("First Yahtzee A Yahtzee is 5 of a kind and scores 50 points, although you may elect NOT to score it as a yahtzee,\n");
+	printf ("instead choosing to take it as a top row score and safegaurd you bonus.");
+	printf ("Additional Yahtzees. If you roll a second Yahtzee in a game, and you scored your first yahtzee in the Yahtzee box,");
+	printf ("you would score a further bonus 100 points in the yahtzee box. You must also put this roll into another category, as follows\n");
+	printf ("-If the corresponding Upper section category is not filled then you must score there.\n");
+	printf ("ie if you rolled 4 - 4 - 4 - 4 - 4 and the Fours Category is not filled, you must put the score in the Fours category.\n");
+	printf ("-If the corresponding Upper section category is filled you may then put the score anywhere on the Upper Section (scoring zero). \n");
+	printf ("In 3 of a Kind, 4 of a Kind, and Chance categories you would score the total of the die faces. For the Small Straight, Large Straight,");
+	printf ("and Full House categories, you would score 30, 40 and 25 points respectively.\n");
+	printf ("Chance You can roll anything and be able to put it in the Chance category. You score the total of the die faces.\n\n\n");
+	printf ("Scratch or Dump scores. \n \n");
+	printf ("You can score any roll in any category at any time, even if the resulting score is zero. Eg, you \n");
+	printf ("can take 2-3-3-4-6 in the 5s category. It will score 0. This could be used near the end of a game to lose a poor roll against a difficult-to-get");
+	printf ("category that youve failed to fill (eg, long straight or yahtzee). \n");
+	system ("PAUSE");
+	return 0;
+}
+
+
+
+//checks the sums of all of the numbers
+int count_total (int die1, int die2, int die3, int die4, int die5, int number)
+{
+	int answer = 0;
+
+	if (die1 == number)
+	{
+		answer += 1;
+	}
+	if (die2 == number)
+	{
+		answer += 1;
+	}
+	if (die3 == number)
+	{
+		answer += 1;
+	}
+	if (die4 == number)
+	{
+		answer += 1;
+	}
+	if (die5 == number)
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+//checks if three of a kind
+int toak_check (int count1, int count2, int count3, int count4, int count5, int count6)
+{
+	int answer = 0;
+
+	if (count1 == 3)
+	{
+		answer += 1;
+	}
+	if (count2 == 3)
+	{
+		answer += 1;
+	}
+	if (count3 == 3)
+	{
+		answer += 1;
+	}
+	if (count4 == 3)
+	{
+		answer += 1;
+	}
+	if (count5 == 3)
+	{
+		answer += 1;
+	}
+	if (count6 == 3)
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+//checks if four of a kind
+int foak_check (int count1, int count2, int count3, int count4, int count5, int count6)
+{
+	int answer = 0;
+
+	if (count1 == 4)
+	{
+		answer += 1;
+	}
+	if (count2 == 4)
+	{
+		answer += 1;
+	}
+	if (count3 == 4)
+	{
+		answer += 1;
+	}
+	if (count4 == 4)
+	{
+		answer += 1;
+	}
+	if (count5 == 4)
+	{
+		answer += 1;
+	}
+	if (count6 == 4)
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+//checks if small straight
+int sml_check (int count1, int count2, int count3, int count4, int count5, int count6)
+{
+	int answer = 0;
+
+	if ((count1 >= 1) && (count2 >= 1) && (count3 >= 1) && (count4 >= 1))
+	{
+		answer += 1;
+	}
+	if ((count2 >= 1) && (count3 >= 1) && (count4 >= 1) && (count5 >= 1))
+	{
+		answer += 1;
+	}
+	if ((count3 >= 1) && (count4 >= 1) && (count5 >= 1) && (count6 >= 1))
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+//checks if large straight
+int lrg_check (int count1, int count2, int count3, int count4, int count5, int count6)
+{
+	int answer = 0;
+
+	if ((count1 >= 1) && (count2 >= 1) && (count3 >= 1) && (count4 >= 1) && (count5 >= 1))
+	{
+		answer += 1;
+	}
+
+	if ((count2 >= 1) && (count3 >= 1) && (count4 >= 1) && (count5 >= 1) && (count6 >= 1))
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+//checks if yahtzee
+int yahtzee_check (int count1, int count2, int count3, int count4, int count5, int count6)
+{
+	int answer = 0;
+
+	if (count1 == 5)
+	{
+		answer += 1;
+	}
+	if (count2 == 5)
+	{
+		answer += 1;
+	}
+	if (count3 == 5)
+	{
+		answer += 1;
+	}
+	if (count4 == 5)
+	{
+		answer += 1;
+	}
+	if (count5 == 5)
+	{
+		answer += 1;
+	}
+	if (count6 == 5)
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+//checks if any two of a kind
+int twooak_check (int count1, int count2, int count3, int count4, int count5, int count6)
+{
+	int answer = 0;
+
+	if (count1 == 2)
+	{
+		answer += 1;
+	}
+	if (count2 == 2)
+	{
+		answer += 1;
+	}
+	if (count3 == 2)
+	{
+		answer += 1;
+	}
+	if (count4 == 2)
+	{
+		answer += 1;
+	}
+	if (count5 == 2)
+	{
+		answer += 1;
+	}
+	if (count6 == 2)
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+// checks if full house
+int full_house_check (int two_kind, int three_kind)
+{
+	int answer = 0;
+
+	if ((two_kind >= 1) && (three_kind >= 1))
+	{
+		answer += 1;
+	}
+
+	return answer;
+}
+
+// sums all of the dice of a certain number
+int sum_dice (int die1, int die2, int die3, int die4, int die5, int number)
+{
+	int answer = 0;
+
+	if (die1 == number)
+	{
+		answer += number;
+	}
+	if (die2 == number)
+	{
+		answer += number;
+	}
+	if (die3 == number)
+	{
+		answer += number;
+	}
+	if (die4 == number)
+	{
+		answer += number;
+	}
+	if (die5 == number)
+	{
+		answer += number;
+	}
+
+	return answer;
+}
+
+// sums all of the dice in total
+int sum_dice_all (int die1, int die2, int die3, int die4, int die5)
+{
+	int answer = 0;
+
+	answer = die1 + die2 + die3 + die4 + die5;
+
+	return answer;
+}
+
+
+
+// pick the decision
+int swt_decision (int die1, int die2, int die3, int die4, int die5, int option)
+{
+	int answer = 0;
+	int count1 = 0, count2 = 0, count3 = 0, count4 = 0, count5 = 0, count6 = 0;
+	int two_kind = 0, three_kind = 0, four_kind = 0, sml_straight = 0,
+		full_house = 0, lrg_straight = 0, yah_true = 0;
+	int sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum_all = 0;
+
+	count1 = count_total (die1, die2, die3, die4,  die5, 1);
+	count2 = count_total (die1, die2, die3, die4,  die5, 2);
+	count3 = count_total (die1, die2, die3, die4,  die5, 3);
+	count4 = count_total (die1, die2, die3, die4,  die5, 4);
+	count5 = count_total (die1, die2, die3, die4,  die5, 5);
+	count6 = count_total (die1, die2, die3, die4,  die5, 6);
+
+	three_kind = toak_check(count1, count2, count3, count4, count5, count6);
+	four_kind = foak_check(count1, count2, count3, count4, count5, count6);
+	sml_straight = sml_check(count1, count2, count3, count4, count5, count6);
+	lrg_straight = lrg_check(count1, count2, count3, count4, count5, count6);
+	yah_true = yahtzee_check (count1, count2, count3, count4, count5, count6);
+	two_kind = twooak_check (count1, count2, count3, count4, count5, count6);
+	full_house = full_house_check(two_kind, three_kind);
+
+	sum1 = sum_dice (die1, die2, die3, die4, die5, 1);
+	sum2 = sum_dice (die1, die2, die3, die4, die5, 2);
+	sum3 = sum_dice (die1, die2, die3, die4, die5, 3);
+	sum4 = sum_dice (die1, die2, die3, die4, die5, 4);
+	sum5 = sum_dice (die1, die2, die3, die4, die5, 5);
+	sum6 = sum_dice (die1, die2, die3, die4, die5, 6);
+
+	sum_all = sum_dice_all (die1, die2, die3, die4, die5);
+
+	switch (option)
+	{
+		case 1:
+			{
+				answer = sum1;
+				break;
+			}
+		case 2:
+			{
+				answer = sum2;
+				break;
+			}
+		case 3:
+			{
+				answer = sum3;
+				break;
+			}
+		case 4:
+			{
+				answer = sum4;
+				break;
+			}
+		case 5:
+			{
+				answer = sum5;
+				break;
+			}
+		case 6:
+			{
+				answer = sum6;
+				break;
+			}
+		case 7:
+			{
+				if (three_kind == 1)
+				{
+					answer = sum_all;
+				}
+				break;
+			}
+		case 8:
+			{
+				if (four_kind == 1)
+				{
+					answer = sum_all;
+				}
+				break;
+			}
+		case 9:
+			{
+				if (full_house == 1)
+				{
+					answer = 25;
+				}
+				break;
+			}
+		case 10:
+			{
+				if (sml_straight >= 1)
+				{
+					answer = 30;
+				}
+				break;
+			}
+		case 11:
+			{
+				if (lrg_straight == 1)
+				{
+					answer = 40;
+				}
+				break;
+			}
+		case 12:
+			{
+				if (yah_true == 1)
+				{
+					answer = 50;
+				}
+				break;
+			}
+		case 13:
+			{
+				answer = sum_all;
+				break;
+			}
+	}
+	return answer;
+}
+
+// check if option is valid
+int option_flag (int option)
+{
+	int flag = 0; // false
+
+	if ((option >= 1) && (option <= 13))
+	{
+		flag = 1; // valid option
+	}
+
+	return flag;
+}
+
+// show the options
+void display_choices (int die1, int die2, int die3, int die4, int die5)
+{
+	printf ("Please give the number for the point value you want that you want to get \n\n");
+	printf ("Die 1: %d\n", die1);
+	printf ("Die 2: %d\n", die2);
+	printf ("Die 3: %d\n", die3);
+	printf ("Die 4: %d\n", die4);
+	printf ("Die 5: %d\n\n", die5);
+	printf (" 1.  sum of 1's \n 2.  sum of 2's \n 3.  sum of 3's \n 4.  sum of 4's \n 5.  sum of 5's \n");
+	printf (" 6.  sum of 6's \n 7.  Three of a Kind \n 8.  Four of a Kind \n 9.  Full house \n");
+	printf (" 10. small straight \n 11. Large straight \n 12. Yahtzee \n 13. Chance \n");
+}
+
+// take in the choice
+int numeral_option (void)
+{
+	int answer = 0;
+	printf ("Input answer:");
+	scanf (" %d", &answer);
+	return answer;
+}
+
+// check if choice is valid
+int valid_variable (int option)
+{
+	int flag = 0;
+
+	if ( option >= 1 && option <= 13)
+	{
+		flag = 1;
+	}
+	return flag;
+}
+
+// overarching option slider
+int multi_get (int die1, int die2, int die3, int die4, int die5)
+{
+	int option = 0, valid = 0;
+
+	do
+	{
+		display_choices (die1, die2, die3, die4, die5);
+		option = numeral_option ();
+		valid = valid_variable (option);
+		system ("cls");
+	} while (!valid);
+
+	return option;
+}
+
+// put in points together
+int add_points (int die1, int die2, int die3, int die4, int die5)
+{
+	int option = 0, point_add = 0;
+	option = multi_get (die1, die2, die3, die4, die5);
+	point_add = swt_decision (die1, die2, die3, die4, die5, option);
+	return point_add;
+}
+
+// collect input
+int get_input (void)
+{
+	char input = '/0';
+	int answer = 0, count = 0;
+
+	do
+	{
+		ask_roll ();
+		input = yes_no ();
+		if (input == 'N')
+		{
+			
+			count += 1;
+		}
+	} while ((input != 'Y')||(count > 3));
+
+	return 0;
+}
+
+// collect yes or no
+void ask_bool (void)
+{
+	printf ("Y/N\n");
+}
+
+// ask for asnwer
+char get_bool (void)
+{
+	char answer = '/0';
+
+	scanf (" %c", &answer);
+
+	return answer;
+}
+
+// check if valid
+int valid_char (char input)
+{
+	int answer = 0;
+
+	if ((input == 'Y') || (input == 'N'))
+	{
+		answer = 1;
+	}
+
+	return answer;
+}
+
+// over fuction for boolian
+char yes_no (void)
+{
+	int valid = 0;
+	char option = '/0';
+
+	do
+	{ 
+		ask_bool ();
+		option = get_bool ();
+		valid = valid_char (option);
+		system ("cls");
+	} while (!valid);
+
+	return option;
+}
+
+// rolling the dice
+void ask_roll (void)
+{
+	printf ("Do you want to re-roll any of the dice?\n");
+}
+
+
+// complete reroll loop
+int loop_reroll (int die1, int die2, int die3, int die4, int die5)
+{
+	int valid = 0, option = 0;
+
+	do
+	{
+		print_reroll (die1, die2, die3, die4, die5);
+		option = get_reroll_number ();
+		valid = valid_reroll (option);
+		system ("cls");
+
+	} while (!valid);
+	return option;
+}
+
+// print out questions
+void print_reroll (int die1, int die2, int die3, int die4, int die5)
+{
+	printf ("Die 1: %d\n", die1);
+	printf ("Die 2: %d\n", die2);
+	printf ("Die 3: %d\n", die3);
+	printf ("Die 4: %d\n", die4);
+	printf ("Die 5: %d\n", die5);
+	printf ("Please tell which die you want to roll: ");
+}
+
+// collect input
+int get_reroll_number (void)
+{
+	int option = 0;
+	scanf (" %d", &option);
+	return option;
+}
+
+// ask for more of them
+int more_than_one (void)
+{
+	char answer = '/0';
+	int output = 0;
+
+	printf ("Do you want to reroll anymore dice? ");
+	answer = yes_no();
+	if (answer == 'Y')
+	{
+		output = 1;
+	}
+	return output;
+}
+
+// check if answer is valid
+int valid_reroll (int number)
+{
+	int flag = 0;
+
+	if ((number >= 1) && (number <= 5))
+	{
+		flag = 1;
+	}
+	return flag;
+}
+
+// printing out scores
+void print_scores (int one, int two)
+{
+	printf ("Player 1 score: %d \nPlayer 2 score: %d\n\n", one, two);
+	system ("PAUSE");
+	system ("cls");
+}
+
+// ask for reroll
+int reroll_all (void)
+{
+	char input = '/0';
+	int answer = 0;
+	printf ("Do you want to reroll them again? ");
+	input = yes_no();
+	if (input == 'Y')
+	{
+		answer = 1;
+	}
+	return answer;
+}
+
+
+// printing final score
+void print_final_score (int player1, int player2)
+{
+	if (player1 > player2)
+		{
+			printf ("Congradulations player 1! You win with %d to %d!\n", player1, player2);
+			printf ("Have a good day!\n\n");
+			system ("PAUSE");
+		}
+	else if (player2 > player1)
+		{
+			printf ("Congradulations player 2! You win with %d to %d!\n", player2, player1);
+			printf ("Have a good day!\n\n");
+			system ("PAUSE");
+		}
+	else
+		{
+			printf ("You two have won everything, you tied!! How the hell? Whatever, you both win with %d.", player1);
+			printf ("Go rule the world or something!\n\n");
+			system ("PAUSE");
+		}
+}
+
+//print out table of what scores are taken into account
+void print_table_scores (int play1_three, int play1_four, int play1_full, int play1_sml, int play1_lrg, int play1_yah, int play2_three,
+		int play2_four, int play2_full, int play2_sml, int play2_lrg, int play2_yah, int play2_chance_score, int play1_chance_score,
+		int play1_1_score, int play1_2_score, int play1_3_score, int play1_4_score, int play1_5_score, int play1_6_score,
+		int play2_1_score, int play2_2_score, int play2_3_score, int play2_4_score, int play2_5_score, int play2_6_score)
+{
+	printf ("Here are the scores. ( 1 means earned )\n");
+	printf ("Sum of 1's: %d\n", play1_1_score);
+	printf ("Sum of 2's: %d\n", play1_2_score);
+	printf ("Sum of 3's: %d\n", play1_3_score);
+	printf ("Sum of 4's: %d\n", play1_4_score);
+	printf ("Sum of 5's: %d\n", play1_5_score);
+	printf ("Sum of 6's: %d\n", play1_6_score);
+	printf ("The three of a kind: %d\n", play1_three);
+	printf ("The four of a kind: %d\n", play1_four);
+	printf ("The Small Straight: %d\n", play1_sml);
+	printf ("The Large Straight: %d\n", play1_lrg);
+	if (play1_yah == 1)
+	{
+		play1_yah = 50;
+	}
+	else 
+	{
+		play1_yah = 50 + (play1_yah * 100);
+	}
+	printf ("The Yahtzee: %d\n", play1_yah);
+	printf ("The chance score: %d\n\n\n", play1_chance_score);
+
+	
+	printf ("Player 2: \n");
+	printf ("Sum of 1's: %d\n", play2_1_score);
+	printf ("Sum of 2's: %d\n", play2_2_score);
+	printf ("Sum of 3's: %d\n", play2_3_score);
+	printf ("Sum of 4's: %d\n", play2_4_score);
+	printf ("Sum of 5's: %d\n", play2_5_score);
+	printf ("Sum of 6's: %d\n", play2_6_score);
+	printf ("The three of a kind: %d\n", play2_three);
+	printf ("The four of a kind: %d\n", play2_four);
+	printf ("The Small Straight: %d\n", play2_sml);
+	printf ("The Large Straight: %d\n", play2_lrg);
+	if (play2_yah == 1)
+	{
+		play2_yah = 50;
+	}
+	else 
+	{
+		play2_yah = 50 + (play2_yah * 100);
+	}
+	printf ("The Yahtzee: %d\n", play2_yah);
+	printf ("The chance score: %d\n\n\n", play2_chance_score);
+}
