@@ -1,0 +1,762 @@
+#include "Yahtzee.h"
+
+int main (void)
+{
+	//ALL THE VARIABLES, BLOODY NO ARRAYS!!
+	int option = 0, die1 = 0, die2 = 0, die3 = 0, die4 = 0, die5 = 0;
+	int reroll_count = 0, reroll_option = 0, redie1 = 0, redie2 = 0, redie3 = 0, redie4 = 0, redie5 = 0,reroll_main = 0, reroll_main_count = 0;
+	int number_rounds = 0, value_option = 0, option_true = 0, pick_choice = 0;
+	int player1_score = 0, player2_score = 0, score_add = 0, player1_turn = 0;
+	char character_input = '/0', reroll_char = '/0';
+
+	int play1_1 = 0, play1_2 = 0, play1_3 = 0, play1_4 = 0, play1_5 = 0, play1_6 = 0, play1_three = 0,
+		play1_four = 0, play1_full = 0, play1_sml = 0, play1_lrg = 0, play1_yah = 0, play1_chan = 0;
+	int play2_1 = 0, play2_2 = 0, play2_3 = 0, play2_4 = 0, play2_5 = 0, play2_6 = 0, play2_three = 0,
+		play2_four = 0, play2_full = 0, play2_sml = 0, play2_lrg = 0, play2_yah = 0, play2_chan = 0;
+
+	int play1_1_score = 0, play1_2_score = 0, play1_3_score = 0, play1_4_score = 0, play1_5_score = 0, play1_6_score = 0, play1_chance_score = 0;
+	int play2_1_score = 0, play2_2_score = 0, play2_3_score = 0, play2_4_score = 0, play2_5_score = 0, play2_6_score = 0, play2_chance_score = 0;
+
+	//create random
+	srand ((unsigned int) time (NULL)); 
+
+	option = run ();
+	
+	//quit the project
+	if (option == 3)
+	{
+		printf ("Good Bye\n");
+		return 0;
+	}
+
+	do
+	{
+		//tell if player 1 or two
+		if (player1_turn == 0)
+			{
+				printf ("Player 1: Roll your dice and play.\n");
+				system("PAUSE");
+			}
+		else
+			{
+				printf ("Player 2: Roll your dice and play.\n");
+				system("PAUSE");
+			}	
+
+
+		//Roll the die
+		die1 = roll_die ();
+		die2 = roll_die ();
+		die3 = roll_die ();
+		die4 = roll_die ();
+		die5 = roll_die ();
+
+		printf ("Die 1: %d\n", die1);
+		printf ("Die 2: %d\n", die2);
+		printf ("Die 3: %d\n", die3);
+		printf ("Die 4: %d\n", die4);
+		printf ("Die 5: %d\n", die5);
+
+		printf ("do you want to reroll any of them? \n");
+
+		character_input = yes_no ();
+
+		if (character_input == 'Y')
+			{
+					//re roll
+				do
+					{
+						reroll_option = loop_reroll (die1, die2, die3, die4, die5);
+	
+						if ((redie1 == 0) & (reroll_option == 1))
+							{
+								die1 = roll_die();
+								reroll_count += 1;
+								redie1 = 1;
+								printf ("The new die 1 is %d \n", die1);
+								printf ("Die 2: %d\n", die2);
+								printf ("Die 3: %d\n", die3);
+								printf ("Die 4: %d\n", die4);
+								printf ("Die 5: %d\n", die5);
+								printf ("Do you want to re-roll another? \n");
+								reroll_char = yes_no ();
+							}
+						else if ((redie2 == 0) & (reroll_option == 2))
+							{
+								die2 = roll_die();
+								reroll_count += 1;
+								redie2 = 1;
+								printf ("Die 1: %d\n", die1);
+								printf ("The new die 2 is %d \n", die2);
+								printf ("Die 3: %d\n", die3);
+								printf ("Die 4: %d\n", die4);
+								printf ("Die 5: %d\n", die5);
+								printf ("Do you want to re-roll another? \n");
+								reroll_char = yes_no ();
+							}
+						else if ((redie3 == 0) & (reroll_option == 3))
+							{
+								die3 = roll_die();
+								reroll_count += 1;
+								redie3 = 1;
+								printf ("Die 1: %d\n", die1);
+								printf ("Die 2: %d\n", die2);
+								printf ("The new die 3 is %d \n", die3);
+								printf ("Die 4: %d\n", die4);
+								printf ("Die 5: %d\n", die5);
+								printf ("Do you want to re-roll another? \n");
+								reroll_char = yes_no ();
+							}
+						else if ((redie4 == 0) & (reroll_option == 4))
+							{
+								die4 = roll_die();
+								reroll_count += 1;
+								redie4 = 1;
+								printf ("Die 1: %d\n", die1);
+								printf ("Die 2: %d\n", die2);
+								printf ("Die 3: %d\n", die3);
+								printf ("The new die 4 is %d \n", die4);
+								printf ("Die 5: %d\n", die5);
+								printf ("Do you want to re-roll another? \n");
+								reroll_char = yes_no ();
+							}
+						else if ((redie5 == 0) & (reroll_option == 5))
+							{
+								die5 = roll_die();
+								reroll_count += 1;
+								redie5 = 1;
+								printf ("Die 1: %d\n", die1);
+								printf ("Die 2: %d\n", die2);
+								printf ("Die 3: %d\n", die3);
+								printf ("Die 4: %d\n", die4);
+								printf ("The new die 5 is %d \n", die5);
+								printf ("Do you want to re-roll another? \n");
+								reroll_char = yes_no ();
+							}
+						else
+							{
+								printf ("You cannot re-reroll\n");
+								system ("PAUSE");
+								system ("cls");
+								printf ("Do you want to reroll a different die?");
+								reroll_char = yes_no ();
+							}
+					} while ((reroll_count <= 5) && (reroll_char == 'Y'));
+				redie1 = 0, redie2 = 0, redie3 = 0, redie4 = 0, redie5 = 0;
+				reroll_main = reroll_all();
+				if (reroll_main == 1)
+					{
+						do
+							{
+								do
+									{
+										//reroll any dice that you want
+										reroll_option = loop_reroll (die1, die2, die3, die4, die5);
+	
+										if ((redie1 == 0) & (reroll_option == 1))
+											{
+												die1 = roll_die();
+												reroll_count += 1;
+												redie1 = 1;
+												printf ("The new die 1 is %d \n", die1);
+												printf ("Die 2: %d\n", die2);
+												printf ("Die 3: %d\n", die3);
+												printf ("Die 4: %d\n", die4);
+												printf ("Die 5: %d\n", die5);
+												printf ("Do you want to re-roll another? \n");
+												reroll_char = yes_no ();
+											}
+										else if ((redie2 == 0) & (reroll_option == 2))
+											{
+												die2 = roll_die();
+												reroll_count += 1;
+												redie2 = 1;
+												printf ("Die 1: %d\n", die1);
+												printf ("The new die 2 is %d \n", die2);
+												printf ("Die 3: %d\n", die3);
+												printf ("Die 4: %d\n", die4);
+												printf ("Die 5: %d\n", die5);
+												printf ("Do you want to re-roll another? \n");
+												reroll_char = yes_no ();
+											}
+										else if ((redie3 == 0) & (reroll_option == 3))
+											{
+												die3 = roll_die();
+												reroll_count += 1;
+												redie3 = 1;
+												printf ("Die 1: %d\n", die1);
+												printf ("Die 2: %d\n", die2);
+												printf ("The new die 3 is %d \n", die3);
+												printf ("Die 4: %d\n", die4);
+												printf ("Die 5: %d\n", die5);
+												printf ("Do you want to re-roll another? \n");
+												reroll_char = yes_no ();
+											}
+										else if ((redie4 == 0) & (reroll_option == 4))
+											{
+												die4 = roll_die();
+												reroll_count += 1;
+												redie4 = 1;
+												printf ("Die 1: %d\n", die1);
+												printf ("Die 2: %d\n", die2);
+												printf ("Die 3: %d\n", die3);
+												printf ("The new die 4 is %d \n", die4);
+												printf ("Die 5: %d\n", die5);
+												printf ("Do you want to re-roll another? \n");
+												reroll_char = yes_no ();
+											}
+										else if ((redie5 == 0) & (reroll_option == 5))
+											{
+												die5 = roll_die();
+												reroll_count += 1;
+												redie5 = 1;
+												printf ("Die 1: %d\n", die1);
+												printf ("Die 2: %d\n", die2);
+												printf ("Die 3: %d\n", die3);
+												printf ("Die 4: %d\n", die4);
+												printf ("The new die 5 is %d \n", die5);
+												printf ("Do you want to re-roll another? \n");
+												reroll_char = yes_no ();
+											}
+										else
+											{
+												printf ("You cannot re-reroll\n");
+												system ("PAUSE");
+												system ("cls");
+												printf ("Do you want to re-roll another? \n");
+												reroll_char = yes_no ();
+											}
+									} while ((reroll_count <= 5) && (reroll_char == 'Y'));
+								//keep counter for rerolling
+								reroll_main_count += 1;
+								redie1 = 0, redie2 = 0, redie3 = 0, redie4 = 0, redie5 = 0;
+
+								//if no is selected
+								if (reroll_char == 'N')
+									{
+										reroll_main = 0;
+									}
+
+							}while ((reroll_main_count < 3) && (reroll_main == 1));
+					}
+			}
+			//player 1 table for scoring
+				if (player1_turn == 0)
+					{
+						do
+							{
+								option_true = multi_get (die1, die2, die3, die4, die5);
+
+								switch (option_true)
+									{
+										case 1:
+											{
+												if (play1_1 == 0)
+													{
+														play1_1 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 2:
+											{
+												if (play1_2 == 0)
+													{
+														play1_2 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 3:
+											{
+												if (play1_3 == 0)
+													{
+														play1_3 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 4:
+											{
+												if (play1_4 == 0)
+													{
+														play1_4 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 5:
+											{
+												if (play1_5 == 0)
+													{
+														play1_5 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 6:
+											{
+												if (play1_6 == 0)
+													{
+														play1_6 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 7:
+											{
+												if (play1_three == 0)
+													{
+														play1_three = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 8:
+											{
+												if (play1_four == 0)
+													{
+														play1_four = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+
+											}
+										case 9:
+											{
+												if (play1_full == 0)
+													{
+														play1_full = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 10:
+											{
+												if (play1_sml == 0)
+													{
+														play1_sml = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 11:
+											{
+												if (play1_lrg == 0)
+													{
+														play1_lrg = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 12:
+											{
+												if (play1_yah == 0)
+													{
+														play1_yah = 1;
+														pick_choice += 1;
+														break;
+													}
+												else if (play1_yah >= 1)
+													{
+														play1_yah += 1;
+														player1_score += 100;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 13:
+											{
+												if (play1_chan == 0)
+													{
+														play1_chan = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+									}
+							} while (pick_choice == 0);
+					}
+				else
+					//player two, this is the table for score counting.
+					{
+						do
+							{
+								option_true = multi_get (die1, die2, die3, die4, die5);
+
+								switch (option_true)
+									{
+										case 1:
+											{
+												if (play2_1 == 0)
+													{
+														play2_1 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 2:
+											{
+												if (play2_2 == 0)
+													{
+														play2_2 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 3:
+											{
+												if (play2_3 == 0)
+													{
+														play2_3 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 4:
+											{
+												if (play2_4 == 0)
+													{
+														play2_2 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 5:
+											{
+												if (play2_5 == 0)
+													{
+														play2_5 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 6:
+											{
+												if (play2_6 == 0)
+													{
+														play2_6 = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 7:
+											{
+												if (play2_three == 0)
+													{
+														play2_three = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 8:
+											{
+												if (play2_four == 0)
+													{
+														play2_four = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 9:
+											{
+												if (play2_full == 0)
+													{
+														play2_full = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 10:
+											{
+												if (play2_sml == 0)
+													{
+														play2_sml = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 11:
+											{
+												if (play2_lrg == 0)
+													{
+														play2_lrg = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.");
+														break;
+													}
+											}
+										case 12:
+											{
+												if (play2_yah == 0)
+													{
+														play2_yah = 1;
+														pick_choice += 1;
+														break;
+													}
+												else if (play2_yah >= 1)
+													{
+														play2_yah += 1;
+														player2_score += 100;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.\n");
+														break;
+													}
+											}
+										case 13:
+											{
+												if (play2_chan == 0)
+													{
+														play2_chan = 1;
+														pick_choice += 1;
+														break;
+													}
+												else
+													{
+														printf ("You cannot put it there, please choose a different answer.\n");
+														break;
+													}
+											}
+									}
+							}while (pick_choice == 0);
+					}
+
+
+				score_add = swt_decision (die1, die2, die3, die4, die5, option_true);
+				
+				//player 1 scores
+				if (player1_turn == 0)
+					{
+						if (option_true == 1)
+							{
+								play1_1_score = score_add;
+							}
+						else if (option_true == 2)
+							{
+								play1_2_score = score_add;
+							}
+						else if (option_true == 3)
+							{
+								play1_3_score = score_add;
+							}
+						else if (option_true == 4)
+							{
+								play1_4_score = score_add;
+							}
+						else if (option_true == 5)
+							{
+								play1_5_score = score_add;
+							}
+						else if (option_true == 6)
+							{
+								play1_6_score = score_add;
+							}
+						else if (option_true == 13)
+							{
+								play1_chance_score = score_add;
+							}
+						if ((play1_1_score + play1_2_score + play1_3_score + play1_4_score + play1_5_score + play1_6_score) >= 65)
+							{
+								player1_score += 35;
+							}
+					}
+				else
+					//player 2 scores
+					{
+						if (option_true == 1)
+							{
+								play2_1_score = score_add;
+							}
+						else if (option_true == 2)
+							{
+								play2_2_score = score_add;
+							}
+						else if (option_true == 3)
+							{
+								play2_3_score = score_add;
+							}
+						else if (option_true == 4)
+							{
+								play2_4_score = score_add;
+							}
+						else if (option_true == 5)
+							{
+								play2_5_score = score_add;
+							}
+						else if (option_true == 6)
+							{
+								play2_6_score = score_add;
+							}
+						else if (option_true == 13)
+							{
+								play1_chance_score = score_add;
+							}
+						if ((play2_1_score + play2_2_score + play2_3_score + play2_4_score + play2_5_score + play2_6_score) >= 65)
+							{
+								player2_score += 35;
+							}
+					}
+
+				// add scores to either player, depending on whose turn it is
+				if (player1_turn == 0)
+					{
+						player1_score += score_add;
+						player1_turn = 1;
+					} 
+				else
+					{
+						player2_score += score_add;
+						player1_turn = 0;
+						number_rounds += 1;
+					}
+
+				//prints out the scores
+				print_scores (player1_score, player2_score);
+
+
+				//show a table of what people have and what they still need to get points in
+				print_table_scores (play1_three, play1_four, play1_full, play1_sml, play1_lrg, play1_yah, play2_three,
+									play2_four, play2_full, play2_sml, play2_lrg, play2_yah, play2_chance_score, play1_chance_score,
+									play1_1_score, play1_2_score, play1_3_score, play1_4_score, play1_5_score, play1_6_score,
+									play2_1_score, play2_2_score, play2_3_score, play2_4_score, play2_5_score, play2_6_score);
+
+
+				//reset certain options for the game's variables
+				option = 0; die1 = 0; die2 = 0; die3 = 0; die4 = 0; die5 = 0;
+				reroll_count = 0; reroll_option = 0; redie1 = 0; redie2 = 0; redie3 = 0; redie4 = 0; redie5 = 0; reroll_main = 0; reroll_main_count = 0;
+				value_option = 0; option_true = 0; pick_choice = 0;
+				score_add = 0; character_input = '/0'; reroll_char = '/0';
+				
+
+	} while (number_rounds <= 13);
+
+	// print out final score and make winner!
+	print_final_score (player1_score, player2_score);
+
+	main ();
+	
+	return 0;
+}
